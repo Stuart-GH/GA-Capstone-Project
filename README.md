@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/stuartlee165/SpottyLinguist/blob/main/Images/logo2.png" width="100"/> 
+  <img src="https://github.com/stuartlee165/SpottyLinguist/blob/main/Images/logo2.png" width="1000"/> 
 </p>
 
 # Machine learning making foreign language music more accessible
@@ -31,7 +31,9 @@ In this project I utilised the Spotify API to collect song metadata on over 50,0
 
 
 ### Data Acquisition and Cleaning
-![image-12.png](attachment:image-12.png)
+<p align="center">
+  <img src="https://github.com/stuartlee165/SpottyLinguist/blob/main/Images/picture2.png" width="1000"/> 
+</p>
 
 The data acquisition for this project was substantial and took up a majority of the overall time available. The initial task was to collate a database of songs from mandarin speaking artists. This was achieved by utilising the Spotify API. I started by creating a diverse playlist of 100 mandarin songs in Spotify. Then using the Python module Spotipy to interface with the Spotify API I found similar artists using the API's related artists function. I repeated this process iteratively on each of the new artists that I found until I had c.2,000 artists. I could have scraped many more artists however I was limited by the number of requests I could send to the Spotify server and time available. For each of the 2000 artists collected I found all of the albums available. Then for each album available to I found the metadata on each song. Ultimately this resulted in a dataframe of 65,000+ songs including metadata such as tempo, "danceability', popularity and genre.
 
