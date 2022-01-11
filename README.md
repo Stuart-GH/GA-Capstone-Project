@@ -1,4 +1,6 @@
- ![image-11.png](attachment:image-11.png)
+<p align="center">
+  <img src="https://github.com/stuartlee165/SpottyLinguist/blob/main/Images/logo2.png" width="100"/> 
+</p>
 
 # Machine learning making foreign language music more accessible
 
