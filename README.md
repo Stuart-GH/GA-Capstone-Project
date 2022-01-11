@@ -89,7 +89,7 @@ The above image can be recreated by grouping songs by genre.
   <img src="https://github.com/stuartlee165/SpottyLinguist/blob/main/Images/picture6.png" width="600"/> 
 </p>
 
-Using Tablea I created a web interface that allows a user to select a HSK level. They are then able to see all of the songs that are accessible at that level sorted by genre, then artist and finally expected comprehension level. By hovering over each song (coloured square) metadata can be viewed such as popularity. Clicking on the link takes the user to the Spotify web app and plays that song. Below is a link (Tableau login required) to the web interface as well as a screenshot. 
+Using Tablea I created a web interface that allows a user to select a HSK level. They are then able to see all of the songs that are accessible at that level sorted by genre, then artist and finally expected comprehension level. By hovering over each song (coloured square) metadata can be viewed such as popularity. Clicking on a square (song) takes the user to the Spotify web app and plays that song. Below is a link (Tableau login required) to the web interface as well as screenshots. 
 
 https://prod-uk-a.online.tableau.com/#/site/spottylinguist/views/SpottyLinguist/Home?:iid=3
 
@@ -115,7 +115,7 @@ I also created plots showing the most frequent words used in songs. This was als
 #### Binary Classification of Song Difficulty Based on Spotify Metadata
 Finding songs that are accessible at the right level is computationally intensive and time consuming given that the method used so far requires scraping lyrics for each song in the database and then processing these. Is it possible to speed up this process by identifying songs that are more likely to be at the right level based on Spotify data? My hypothesis was that there would be very limited information contained in the song metadata. 
 
-I used a logistic regression model to try and identify songs that are HSK 1-4 vs HSK 5-6 from Spotify song metadata alone. Data included information such as tempo, danceability, speechiness, acousticness, time signature and duration. The mean cross validation score was 54% compared with the baseline of 47%. This score suggests (unsurprisingly) that there is very limited information contained in song metadata for classifying song language difficulty. I then added artist and genre to the explanatory data and rerun the logistic model. This resulted in an improved mean cross validation score of 60%. The coefficient with the greatest weight was Chinese R&B. When looking at this genre it can be seen that 86% of songs have lyrics within HSK1-4 vs. the baseline of 52%. Singoaporean Mandopop was the second coefficient and has 68% in scope for HSK 1-4. 
+I used a logistic regression model to try and identify songs that are HSK 1-4 vs HSK 5-6 from Spotify song metadata alone. Data included information such as tempo, danceability, speechiness, acousticness, time signature and duration. The mean cross validation accuracy score was 54% compared with the baseline of 47%. This score suggests (unsurprisingly) that there is very limited information contained in song metadata for classifying song language difficulty. I then added artist and genre to the explanatory data and rerun the logistic model. This resulted in an improved mean cross validation score of 60%. The coefficient with the greatest weight was Chinese R&B. When looking at this genre it can be seen that 86% of songs have lyrics within HSK1-4 vs. the baseline of 52%. Singoaporean Mandopop was the second coefficient and has 68% in scope for HSK 1-4. 
 
 Whilst the model was poor overall at identifying HSK level it was able to identify some genres which may be more accessible to language learners. 
 
@@ -123,7 +123,7 @@ Whilst the model was poor overall at identifying HSK level it was able to identi
 
 I ran binary classification models using song lyrics as the explanatory variables and the target variable being the song difficulty level - easy (HSK 1-5) or difficult (HSK 6). The baseline score was 53% with the two groups roughly of equal size. I experimented with different methods of vectorizing the lyrics using Term Frequency Inverse Document Frequency ("TfidfVectorizer") and CountVectorizer. The CountVectorizer vectorizes words based on their frequency and performed more strongly which I attribute to song difficulty level being related to word frequency (i.e. songs that are easier will have more commonly used words). I also tried different methods of tokenizing the lyrics and found that the Python module SnowNLP provided the strongest scores but took significantly more time to run. I switched to an alternative tokenizer "Jieba", which increased computation time and had minimal impact on scores. 
 
-I ran a range of different models as shown in the output below. The model with the overall best performance was the BernoulliNB which had an accuracy score of 75% (vs. baseline of 53%) and precision and recall scores for both target groups of between 70-80%. The BernoulliNB was also computationally efficient, taking a negligible time to run. Some of the other models took a substantial amount of time to run given the large number of features included (50,000).
+I ran a range of different models as shown in the output below. The model with the overall best performance was the Naive Bayes which had an accuracy score of 75% (vs. baseline of 53%) and precision and recall scores for both target groups of between 70-80%. Naive Bayes was also computationally efficient, taking a negligible time to run. Some of the other models took a substantial amount of time to run given the large number of features included (50,000).
 
 <p align="center">
   <img src="https://github.com/stuartlee165/SpottyLinguist/blob/main/Images/picture10.png" width="600"/> 
@@ -135,30 +135,32 @@ Output from final neural network model:
 <p align="center">
   <img src="https://github.com/stuartlee165/SpottyLinguist/blob/main/Images/picture11.png" width="600"/> 
 </p>
+
 #### Multi Classification of Song Difficulty Based on Song Lyrics
+
 <p align="center">
   <img src="https://github.com/stuartlee165/SpottyLinguist/blob/main/Images/picture12.png" width="600"/> 
 </p>
 I ran multi classification models using lyrics as the explanatory variables and the target being song difficulty split into four groups HSK 1-3, HSK 4, HSK 5 and HSK 6. There was a large class imbalance with HSK 5 being the largest group accounting for c.58% of observations and HSK 1-3 the smallest accounting for only 3.2%. I found that applying inverse weights to the classes as a parameter in the models was effective at dealing with this. 
 
-The BernoulliNB model was again the best performing model overall in terms of accuracy scores and run time. I ran a gridsearch on this model and obtained a test score of 69% and a mean cross validation score of 70%. 
+Naive Bayes model was again the best performing model overall in terms of accuracy scores and run time. I ran a gridsearch on this model and obtained a test score of 69% and a mean cross validation score of 70%. 
 
 <p align="center">
   <img src="https://github.com/stuartlee165/SpottyLinguist/blob/main/Images/picture13.png" width="600"/> 
 </p>
 
-I also experimented with neural network models but again was limited by computation power. The test and training scores were 70% respectively in line with the BernoulliNB described above. 
+I also experimented with neural network models but again was limited by computation power. The test and training scores were 70% respectively in line with the Naive Bayes model. 
 #### Unsupervised Classification Models to Identify Topics and Group Songs with Similar Lyrics
 
-I carried out preliminary investigations into whether songs could be split into meaningful categories / themes based on the lyrics in a song. My efforts were focussed on using k-means clustering which was computationally more efficient than some other models (such as Density-based spatial clustering "DBScan"). K-means aims to partition n observations into a specified number of clusters in which each observation belongs to the cluster with the nearest mean (cluster centers). I used the TfidfVectorizer as this adds greater weight to words that occur less frequently in the corpus and therefore may have more differentiating power. This is more suitable in this instance than using a count vectorizer. 
+I carried out preliminary investigations into whether songs could be split into meaningful categories / themes based on the lyrics in a song. My efforts were focussed on using k-means clustering which was computationally more efficient than some other models (such as Density-based spatial clustering "DBScan"). K-means aims to partition observations into a specified number of clusters in which each observation belongs to the cluster with the nearest mean (cluster centers). I used the TfidfVectorizer as this adds greater weight to words that occur less frequently in the corpus and therefore may have more differentiating power. This was more suitable in this instance than using a count vectorizer. 
 
-I experimented with different cluster sizes and below show the words from the first 3 groups in a model with a total of 60 clusters. Identifying topics is highly subjective and there are unsurprisingly common themes of love, family, friendship etc. that are so pervasive as to make splitting them up challenging. Nonetheless, looking at the first 3 groups there are some similarities. 
+I experimented with different cluster sizes, however identifying topics is highly subjective and there are unsurprisingly common themes of love, family, friendship etc. that are so pervasive as to make splitting them up challenging. In the below figure I show the output from the first clustering model I ran which grouped songs into 60 groups. Looking at the first 3 groups there are some similarities. 
 
 <p align="center">
   <img src="https://github.com/stuartlee165/SpottyLinguist/blob/main/Images/picture14.png" width="1000"/> 
 </p>
 
-I did not have time to look into grouping songs with similar lyrics. However, I feel that this would be relatively simple to implement using a count vectorizer. The more time consuming aspect will be to write the Python code that will be able to evaluate how similar the words in each cluster are. 
+I also investigated grouping songs with similar lyrics using the countvectorizer. This would be useful as it would allow people to focus on learning only a subset of words. More work is required on this part of the project including implementing code that can return a score showing the degree of homogeneity. 
 
 ### Limitations
 
@@ -166,16 +168,16 @@ The primary limitations encountered during this project were time available and 
 
 ### Conclusions 
 
-The problem we set out to answer was to identify whether machine learning can be used to make music a more accessible tool for people learning a foreign language. The data collection and analysis stage demonstrated that there are a small subset of songs that are more suitable to early stage language learners. These could be a valuable tool to people if they were made more accessible. The modelling stage also demonstrated that it is possible to train models to classify songs based on their difficulty. The application of unsupervised models to group songs was demonstrated to a lesser extent but the results would support further investigation. There was not time to apply unsupervised models to group songs based on similarity of lyrics although this is an area which I think would have the most potential benefit for further research. 
+The problem I set out to answer was whether machine learning can be used to make music a more accessible tool for people learning a foreign language. The data collection and analysis stage demonstrated that there are a small subset of songs that are more suitable to early stage language learners. These songs could be a valuable tool to people if they were made more accessible. The modelling stage also demonstrated that it is possible to train models to classify songs based on their difficulty. The application of unsupervised models to group songs based on lyrics was demonstrated to a lesser extent but the results would support further investigation. 
 
 ### Further Work
 <p align="center">
   <img src="https://github.com/stuartlee165/SpottyLinguist/blob/main/Images/picture15.png" width="1000"/> 
 </p>
 
-As a side project I put together a music player interface in Jupyter Notebook using a Python package "ipywidgets". The player currently allows a user to select a language difficulty level, a genre and to then play a random song from this criteria in Spotify. It also shows the lyrics to the song in a karaoke style at the bottom which are sourced from the SQLite database. A screenshot of the application is shown below. Currently some of the functionality has not been implemented:
-- Character Choice - this would allow a user to select a character / words they would like to learn and find songs which contain this. 
-- Talkability / Tempo - this would be relatively easy to implement and would allow a user to for example find songs with a greater amount of speech but that are slower and more therefore easier to understand.
+As a side project I put together a music player interface in Jupyter Notebook using a Python package "ipywidgets". The player currently allows a user to select a language difficulty level, a genre and to then play a random song from this criteria in Spotify. It also prints the lyrics of the song in a karaoke style which are sourced from the SQLite database. A screenshot of the application is shown below. The folowing functionality is yet to be implemented:
+- Character Choice - this would allow a user to select a chinese character / words they would like to learn and find songs which contain this. 
+- Talkability / Tempo - this would be relatively easy to implement and would allow a user for example to find songs with a greater amount of speech but that are slower and more therefore easier to understand.
 - Create playlist - there is functionality through the Spotify API to create playlists on a users account. It would be interesting to be able to create custom playlists based on some of the parameters discussed in this document. 
 
 In this project I focussed primarily on finding songs that would be at the right difficulty level for a listener, however it would be interesting to explore whether it is possible to find songs that also match a user's music tastes. This is challenging as there is on the face of it limited data that could be applied to this cause. The most obvious and readily available data point is genre, however there is limited overlap in how genres are described between English music and Chinese music (there may be more overlap in less disparate languages such as English and French). The genres are also generally broad with a majority of music just falling into a general category such as popular music or "indie". There is also limited scope to use lyrics as a differentiating factor. The answer may be to look at the actual audio data of songs (30 seconds audio clips are available from Spotify). Other research projects have shown that it is relatively straightforward to create spectrograms of audio files which can then be input into clustering algorithms. It would be interesting to experiment with this method as there is the potential to create a system where a user could select a song they enjoy in their own language and be returned a song(s) that are musically equivalent in a different language of their choice. 
