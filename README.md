@@ -184,7 +184,7 @@ In this project I focussed primarily on finding songs that would be at the right
 
 ### Key Learnings & Challenges
 
-While the stated objective of this project was to investigate machine learning and foreign language learning, in reality it was an educational exercise to apply some of the lessons from the General Assembly Data Science Immersive Course. In this it was successful as it allowed me to utilise the following: Github, version control, data wrangling, APIs, binary and multi classification models, NLP, unsupervised learning and creating basic interfaces. 
+While the stated objective of this project was to investigate machine learning and foreign language learning, fundamentally it was an educational exercise to apply some of the lessons from the General Assembly Data Science Immersive Course. In this it was successful as it allowed me to utilise the following: Github, version control, data wrangling, APIs, binary and multi classification models, NLP, unsupervised learning and creating basic interfaces. 
 
 ### Libraries used
 
