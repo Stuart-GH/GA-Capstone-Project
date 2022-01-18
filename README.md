@@ -19,6 +19,9 @@ This project was completed as part of the General Assembly Data Science Immersiv
 * Images
 * Read Me
 
+
+Please note the data files are not included.
+
 ### Contents
 
 - [Problem Statement](#problem_statement)
@@ -30,12 +33,6 @@ This project was completed as part of the General Assembly Data Science Immersiv
 - [Further Work](#further_work)
 - [Key Learnings and Challenges](#key_learnings_and_challenges)
 - [Contact](#contact_)
-
-
-
-Please note the data files are not included.
-
-
 
 <a name="problem_statement"></a>
 # Problem Statement
