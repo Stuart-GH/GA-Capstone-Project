@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/stuartlee165/SpottyLinguist/blob/main/Images/logo2.png" width="1000"/> 
+  <img src="https://github.com/stuartlee165/SpottyLinguist/blob/main/Images/vinyl.jpeg" width="600"/> 
 </p>
 
 # Making Foreign Language Music More Accessible With Machine Learning
