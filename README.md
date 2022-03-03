@@ -2,7 +2,7 @@
   <img src="https://github.com/stuartlee165/SpottyLinguist/blob/main/Images/vinyl.jpeg" width="600"/> 
 </p>
 
-# Making Foreign Language Music More Accessible With Machine Learning
+# Can We Make Foreign Language Music More Accessible With Machine Learning?
 
 ### Overview
 
